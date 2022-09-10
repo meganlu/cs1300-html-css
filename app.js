@@ -1,3 +1,4 @@
+
 // Make a GET request to the fruityvice api to retrieve some fruit data
 const apiRequest = async () => {
   /**
@@ -8,11 +9,11 @@ const apiRequest = async () => {
    * Step 2: Once installation is finished, run `lcp --proxyUrl https://www.fruityvice.com`
    * Step 3: If you see "Proxy Active", you're all set up! 
    * 
-   * Note the port number (eg. PORT: 8010) and fill it in below
+   * Note the port number (eg. PORT: 8010) and fill it in below 
    */
 
   // TODO fill in your own port number 
-  const PORT_NUMBER = "";
+  const PORT_NUMBER = "8010";
 
   const baseUrl = `http://localhost:${PORT_NUMBER}/proxy/api/`
 
@@ -29,7 +30,7 @@ const apiRequest = async () => {
     }
   });
 
-  // console.log(response);
+  console.log(response);
 
   // Return the response in JSON format
   return response.json();
@@ -40,14 +41,31 @@ const updatePage = async () => {
 
   // Make API request and get an array of fruit objects
   const fruitsArray = await apiRequest();
-  // console.log(fruitsArray);
+  console.log(fruitsArray);
 
   // TODO: Use either `map` and/or `filter` to extract some data from the array of fruit objects
   // For example, find "name of all fruits whose sugar > 15", 
+  
+  sugarfruits = fruitsArray.filter((fruit) => {
+    return fruit.nutritions.sugar > 15; 
+  })
+  sugarfruitsnames = sugarfruits.map((fruit) => {
+    return fruit.name;
+  })
+
+  console.log(sugarfruitsnames);
 
   // TODO: Create a new HTML element to display your data 
 
   // TODO: Append your new element to the page
+
+  // Create a new HTML element and set its properties
+  const newElement = document.createElement('div');
+  newElement.innerHTML = sugarfruitsnames;
+
+  // Append the new element to an existing part of the webpage
+  const existingElement = document.getElementById('fruits');
+  existingElement.append(newElement);
 
 }
 
@@ -61,3 +79,5 @@ const exampleAddElement = () => {
   const existingElement = document.getElementById('example-id');
   existingElement.append(newElement);
 }
+
+updatePage();
